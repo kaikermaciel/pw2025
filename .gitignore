@@ -1,0 +1,57 @@
+# Ignorar diretórios
+.ServiceHub/
+.arduino15/
+.arduinoIDE/
+.cache/
+.config/
+.docker/
+.dotnet/
+.gradle/
+.gk/
+.gnupg/
+.ipython/
+.java/
+.jdks/
+.lesshst
+.local/
+.minecraft/
+.pam_environment
+.parsec-persistent/
+.parsec/
+.pki/
+.sdkman/
+.ssh/
+.streamlit/
+.swt/
+.tlauncher/
+.var/
+.vscode/
+.wine/
+
+# Ignorar arquivos específicos
+.bash_alias
+.bash_history
+.bash_logout
+.bashrc
+.gitconfig
+.grails_history
+.profile
+.python_history
+.zcompdump
+.zsh_alias
+.zsh_history
+.zshrc
+
+# Ignorar arquivos PDF, DOCX, etc.
+Documents/*.pdf
+Documents/*.docx
+Documents/*.zip
+Documents/*.png
+Documents/*.jpg
+Documents/*.gif
+
+# Ignorar outros tipos de arquivos
+*.tar.gz
+*.deb
+*.pyc
+*.class
