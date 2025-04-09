@@ -1,0 +1,18 @@
+body{
+    background-image: url(8724d4fd2d1a83ec1c36a72fc1105f17.jpeg);
+    background-size:cover;
+    background-repeat:no-repeat;
+}
+
+#nebula{
+    color: white;
+    border: solid green;
+    background-color:darkred;
+    border-radius: 14px;
+    margin: 120px;
+    padding: 20px;
+    border-width: 5px;
+    width: 600px;
+    text-align: center;
+    display: grid;
+}
