@@ -1,0 +1,14 @@
+#space{
+    background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
+    position: relative;
+    overflow: hidden;
+}
+
+#ship{
+    position: absolute;
+}
+
+.enemy-ship{
+    position: absolute;
+}
+
