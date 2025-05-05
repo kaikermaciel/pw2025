@@ -1,0 +1,85 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Garante que o body e html ocupem 100% da altura da tela */
+  }
+
+.container{
+    width: 100%;;
+    height: 100vh;
+    background-image: url(../img/background.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+}
+
+.raccoon {
+    border: 4px solid beige;
+    padding: 15px;
+    background-color: rgba(0, 10, 0, 0.5);
+    position: absolute; /* Permite sobrepor o texto sobre a imagem e a overlay */
+    top: 80%; /* Alinha o texto verticalmente ao centro */
+    left: 50%; /* Alinha o texto horizontalmente ao centro */
+    transform: translate(-50%, -50%); /* Ajusta a posição para garantir o centro exato */
+    color: white; /* Cor do texto */
+    font-size: 24px; /* Tamanho do texto */
+    font-weight: bold; /* Deixa o texto em negrito */
+}
+
+.raccoon #challenger {
+    color: orange; /* Cor do texto */
+    font-size: 24px; /* Tamanho da fonte */
+    font-weight: bold; /* Estilo em negrito */
+    text-align: center; /* Centraliza o texto */
+    margin-top: 20px; /* Espaço acima do texto */
+    font-family:Tiny5
+}
+
+.raccoon #raccoonGif{
+    position: absolute; /* Posiciona o GIF em relação ao raccoon */
+    top: -500px; /* Ajusta a posição do GIF para ficar em cima do texto */
+    left: 50%;
+    transform: translate(-110%, -30%); /* Centraliza horizontalmente */
+    width: 200px; /* Ajuste de tamanho do GIF */
+    height: 100px;
+}
+
+.raccoon #buttons{
+    position: absolute;
+    left: 50%;
+    top: 175%;
+    transform: translate(-50%, -190%);
+}
+
+button{
+    font-size: 25px;
+    font-family: Tiny5;
+    text-align: center;
+    background-color: rgb(247, 247, 222);
+    font: bold;
+    color: orange;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Efeito de aumento do tamanho ao passar o mouse */
+  }
+  
+  button:active {
+    background-color: #004085;
+    transform: scale(1); /* Retorna ao tamanho original ao pressionar */
+  }

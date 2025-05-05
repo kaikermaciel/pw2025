@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>JoKENpo</title>
+</head>
+<body>
+    <div class="container">
+        <div class="overlay"></div>
+    </div>
+    
+    <div class="raccoon">
+        <div id="raccoonGif">
+            <img src="img/racoon.gif" alt="racoon-gif">
+        </div>
+        <p id="challenger">Bem vindo ao jogo do jokenpo! Você está preparado para me enfrentar?<br>
+        Saiba que eu não irei facilitar pra você! HAHAHA</p>   
+        <div id="buttons">
+            <button id="startButton">Começar</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            window.location.href = 'instructions.html'; // Redireciona para a página desejada
+          });
+    </script>
+</body>
+</html>
