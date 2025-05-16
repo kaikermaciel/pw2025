@@ -2,6 +2,8 @@
     background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
     position: relative;
     overflow: hidden;
+    margin-left: 40em;
+    box-shadow: 0px 0px 10px rgb(88, 1, 81) ;
 }
 
 #ship{
@@ -12,3 +14,7 @@
     position: absolute;
 }
 
+body{
+    background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
+    
+}

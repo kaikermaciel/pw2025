@@ -1,11 +1,12 @@
 import { FPS } from "./config.js"
 import { space } from "./space.js"
 import { ship } from "./ship.js"
-import { createRandomEnemyShip, moveEnemyShips } from "./enemyShip.js"
+import { createRandomEnemyShip, moveEnemyShips, enemyShips, eliminateEnemyShips } from "./enemyShip.js"
 
 function init(){
     setInterval(run, 1000 / FPS)
 }
+
 
 window.addEventListener("keydown", (e) =>{
     if (e.key === "ArrowLeft") ship.changeDirection(-1)
@@ -17,6 +18,8 @@ function run(){
     ship.move()
     createRandomEnemyShip()
     moveEnemyShips()
+    ship.colisao(enemyShips)
+    eliminateEnemyShips()
 }
 
 init()
