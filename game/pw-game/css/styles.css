@@ -1,3 +1,45 @@
+.enemy-ship{
+    position: absolute;
+}
+
+body{
+    background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
+}
+
+.bullet {
+  width: 8px;
+  height: 24px; 
+  pointer-events: none;
+  position: absolute;
+  z-index: 10000;
+  background: red; /* só para testar, depois remove */
+  display: block;
+}
+
+.meteor {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  pointer-events: none;
+  z-index: 900;
+}
+
+.enemy-bullet {
+  width: 8px;
+  height: 24px;
+  position: absolute;
+  pointer-events: none;
+  z-index: 900;
+}
+
+.ufo {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  pointer-events: none;
+  z-index: 950;
+}
+
 #space{
     background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
     position: relative;
@@ -10,11 +52,96 @@
     position: absolute;
 }
 
-.enemy-ship{
-    position: absolute;
+#pause-screen{
+
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: rgb(174, 0, 255);
+    font-family: "Iceland", sans-serif;
+    font-size: 48px;
+    text-align: center;
+    padding-top: 300px;
+    z-index: 100001;
+    
 }
 
-body{
-    background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
-    
+
+#restart-btn{
+    margin-top: 30px;
+    font-size: 24px;
+    padding: 10px 20px;
+    color:yellow;
+     font-family: "Iceland", sans-serif;
+    background-color:rgb(50, 0, 97);
+    cursor: pointer;
+    border-color: rgb(0, 0, 248);
+    border-style:solid;
+    border-radius: 20%;
+    border-width: 5px;
+}
+
+#tutorial-screen{
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgb(136, 0, 247);
+  color: rgb(255, 208, 0);
+  font-family: 'Iceland', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100001;
+  padding: 20px;
+}
+
+#start-game-btn{
+   margin-top: 30px;
+    padding: 10px 25px;
+    font-size: 22px;
+    cursor: pointer;
+    font-family: 'Iceland', sans-serif;
+}
+
+#hud{
+  position: fixed; 
+  top: 10px; 
+  left: 10px;
+  color: white;
+  font-family: 'Iceland', sans-serif;
+  font-size: 18px;
+  z-index: 10000;
+}
+
+#lives-container{
+  font-family:'Iceland', sans-serif; 
+  display: inline-block; 
+  vertical-align: middle;
+}
+
+#score{
+  font-family:'Iceland', sans-serif; 
+  margin-left: 15px;
+}
+
+#game-over-screen{
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  font-family: 'Iceland', sans-serif;
+  font-size: 36px;
+  text-align: center;
+  padding-top: 200px;
+  z-index: 100000;
+}
+
+
+#final-score{
+  font-family:'Iceland', sans-serif; 
+  font-size: 28px; 
+  margin-top: 20px; 
+  color:blueviolet
 }

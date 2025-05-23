@@ -1,4 +1,4 @@
-import { TAMX, TAMY } from "./config.js"
+import { TAMX, DIFFICULTY, MARGIN } from "./config.js"
 import { PROB_ENEMY_SHIP } from "./config.js"
 import { space } from "./space.js"
 class EnemyShip{
@@ -7,13 +7,18 @@ class EnemyShip{
         this.element.className = "enemy-ship"
         this.element.src = "./assets/spaceArt/png/enemyShip.png"
         this.element.style.top = "-20px"
-        this.element.style.left = `${parseInt(Math.random() * TAMX)}px`
+        this.element.style.left = `${MARGIN + Math.random() * (TAMX - 2 * MARGIN)}px`;
+        this.element.style.right = `${MARGIN + Math.random() * (TAMX - 2 * MARGIN)}px`;
+
         
         space.element.appendChild(this.element)
 
+
+        
     }
     move(){
-        this.element.style.top = `${parseInt(this.element.style.top) + 1}px`
+        const inc = 1 * DIFFICULTY.speedMultiplier
+        this.element.style.top = `${parseInt(this.element.style.top) + inc}px`
     }
 }
 
@@ -28,14 +33,6 @@ export const moveEnemyShips = () => {
     enemyShips.forEach(e => e.move())
 }
 
-// export const eliminateEnemyShips = () =>{
-//     let element = enemyShips[0];
-//     let rect = element.getBoundingClientRect();
 
-//     console.log("Posição top: " + rect.top);
-//     console.log("Posição left: " + rect.left);
-//     console.log("Largura: " + rect.width);
-//     console.log("Altura: " + rect.height);
-// }
 
 export { enemyShips }
