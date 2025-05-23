@@ -1,4 +1,4 @@
-import { FPS } from "./config.js"
+import { FPS, TAMX } from "./config.js"
 import { space } from "./space.js"
 import { ship } from "./ship.js"
 import { updateHUD } from "./ship.js"
@@ -28,6 +28,7 @@ function restartGame() {
 
   ship.lives = 3;
   ship.score = 0;
+  ship.element.style.left = `${TAMX/2 - 50}px`
   updateHUD(ship.lives, ship.score);
 
   enemyShips.forEach(e => e.element.remove());

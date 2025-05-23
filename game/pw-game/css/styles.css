@@ -114,11 +114,12 @@ body{
 
 #hud{
   position: fixed; 
-  top: 10px; 
-  left: 10px;
+  width: 103em;
+  margin: 0 auto;
+  text-align: center;
   color: white;
   font-family: 'Iceland', sans-serif;
-  font-size: 18px;
+  font-size: 22px;
   z-index: 10000;
 }
 
@@ -130,7 +131,7 @@ body{
 
 #score{
   font-family:'Iceland', sans-serif; 
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
 #game-over-screen{

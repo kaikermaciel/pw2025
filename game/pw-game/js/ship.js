@@ -5,7 +5,6 @@ import { enemyShips } from "./enemyShip.js"
 import { meteors } from "./meteor.js"
 import { FIRE_COOLDOWN_MS } from "./config.js"
 import { ufos } from "./ufo.js";
-import { FloatingScore } from "./floatingScore.js"
 
 
 const directions = [
