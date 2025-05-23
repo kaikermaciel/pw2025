@@ -1,10 +1,11 @@
-import { TAMX } from "./config.js"
+import { TAMX, DIFFICULTY } from "./config.js"
 import { space } from "./space.js"
 import { Bullet } from "./bullet.js"
 import { enemyShips } from "./enemyShip.js"
 import { meteors } from "./meteor.js"
 import { FIRE_COOLDOWN_MS } from "./config.js"
 import { ufos } from "./ufo.js";
+import { FloatingScore } from "./floatingScore.js"
 
 
 const directions = [
@@ -24,11 +25,11 @@ class Ship{
         this.element.style.left = `${TAMX/2 - 50}px`
 
         space.element.appendChild(this.element)
-        this.lives = 3;    // vida inicial
-        this.score = 0;    // pontuação inicial
-        this.isDamaged = false;    // flag para sprite danificado
-        this.isImmune = false;     // flag para imunidade após dano      
-        this.blinkInterval = null;  // para guardar o intervalo do piscar 
+        this.lives = 3;   
+        this.score = 0;    
+        this.isDamaged = false;    // flag de dano
+        this.isImmune = false;     // flag de imunidade       
+        this.blinkInterval = null;  
         this.lastFireTime = 0; // timestamp do último tiro
         this.bullets = [];
     }
@@ -42,10 +43,27 @@ class Ship{
         }
     }
 
+    setDirection(giro){
+        if (this.isDamaged) return;
+        if (giro === 0){
+            this.direction = this.direction[giro]
+            this.element.src = directions[this.direction]
+        } else if (giro === 2){
+            this.direction = this.direction[giro]
+            this.element.src = directions[this.direction]
+        } else {
+            this.direction = this.direction[giro]
+            this.element.src = directions[this.direction]
+        }
+    }
+
 
     move() {
         const parentRect = this.element.parentElement.getBoundingClientRect();
         const rect = this.element.getBoundingClientRect();
+        
+        const baseSpeed = 2; 
+        const speed = baseSpeed * DIFFICULTY.speedMultiplier;
 
         const relativeLeft = rect.left - parentRect.left;
 
@@ -53,11 +71,12 @@ class Ship{
         const rightLimit = TAMX - rect.width;
 
         if (this.direction === 0 && relativeLeft > leftLimit) {
-            this.element.style.left = `${relativeLeft - 1}px`;
+            this.element.style.left = `${relativeLeft - speed}px`;
         }
         if (this.direction === 2 && relativeLeft < rightLimit) {
-            this.element.style.left = `${relativeLeft + 1}px`;
+            this.element.style.left = `${relativeLeft + speed}px`;
         }
+        
     }
 
     startBlinking() {
@@ -70,7 +89,7 @@ class Ship{
 
     stopBlinking() {
         clearInterval(this.blinkInterval);
-        this.element.style.opacity = "1";  // garante opacidade normal no fim
+        this.element.style.opacity = "1";  
         this.blinkInterval = null;
     }
 
@@ -79,7 +98,7 @@ class Ship{
 
         this.isDamaged = true;
         this.isImmune = true;
-        this.element.src = directions[3]; // sprite de dano
+        this.element.src = directions[3]; // Bota o shipDamaged
 
         this.startBlinking();
 
@@ -92,7 +111,7 @@ class Ship{
     }
 
     loseLife() {
-        if (this.isImmune) return;  // ignora perda de vida se estiver imune
+        if (this.isImmune) return;  // Fica imune se levar dano
 
         this.lives -= 1;
         updateHUD(this.lives, this.score);
@@ -140,7 +159,9 @@ class Ship{
 
 
 
-    colisao() {
+    collision() {
+
+        // enemy ship
         enemyShips.forEach((enemy, index) => {
         const shipRect = this.element.getBoundingClientRect();
         const enemyRect = enemy.element.getBoundingClientRect();
@@ -151,13 +172,13 @@ class Ship{
             shipRect.top < enemyRect.bottom &&
             shipRect.bottom > enemyRect.top
         ) {
-            // Colisão detectada
             enemy.element.remove();
             enemyShips.splice(index, 1);
             this.loseLife();
         }
         });
 
+        //ufo
         for (let i = ufos.length - 1; i >= 0; i--) {
             const ufo   = ufos[i];
             const shipRect = this.element.getBoundingClientRect();
@@ -169,20 +190,19 @@ class Ship{
             shipRect.top    < ufoRect.bottom&&
             shipRect.bottom > ufoRect.top
             ) {
-            ufo.destroy();       // remove do DOM
-            ufos.splice(i, 1);   // remove da lista
-            this.loseLife();     // causa dano
+            ufo.destroy();       
+            ufos.splice(i, 1);   
+            this.loseLife();     
             }
         }
-    }
 
-    checkMeteorCollisions() {
+        // meteoro
         const shipRect = this.element.getBoundingClientRect();
 
         meteors.forEach((meteor, meteorIndex) => {
             const meteorRect = meteor.element.getBoundingClientRect();
 
-            // Colisão nave x meteoro
+            
             if (
                 shipRect.left < meteorRect.right &&
                 shipRect.right > meteorRect.left &&
@@ -193,82 +213,86 @@ class Ship{
                 meteors.splice(meteorIndex, 1);
                 this.loseLife();
             }
-
-            // Colisão bala x meteoro
-            this.bullets.forEach((bullet, bulletIndex) => {
-                const bulletRect = bullet.element.getBoundingClientRect();
-                if (
-                    bulletRect.left < meteorRect.right &&
-                    bulletRect.right > meteorRect.left &&
-                    bulletRect.top < meteorRect.bottom &&
-                    bulletRect.bottom > meteorRect.top
-                ) {
-                    bullet.remove();
-                    this.bullets.splice(bulletIndex, 1);
-
-                    meteor.remove();
-                    meteors.splice(meteorIndex, 1);
-
-                    // Pontos diferentes dependendo do tipo
-                    if (meteor.type === "small") {
-                        this.addScore(100);
-                    } 
-                    else if (meteor.type === "big") {
-                        this.addScore(10);
-                    }
-                }
-            });
-        });
+        });    
     }
+
+
 
     updateBullets() {
         this.bullets.forEach((bullet, i) => {
             bullet.move();
-            const br = bullet.element.getBoundingClientRect();
+            const bulletShoted = bullet.element.getBoundingClientRect();
 
-            if (br.bottom <= 0) {
+            if (bulletShoted.bottom <= 0) {
                 bullet.remove();
                 this.bullets.splice(i, 1);
                 return;
             }
 
-            enemyShips.forEach((e, j) => {
-                const er = e.element.getBoundingClientRect();
+            enemyShips.forEach((enemy, enemyIndex) => {
+                const enemyRect = enemy.element.getBoundingClientRect();
 
                 if (
-                    br.left < er.right &&
-                    br.right > er.left &&
-                    br.top < er.bottom &&
-                    br.bottom > er.top
+                    bulletShoted.left < enemyRect.right &&
+                    bulletShoted.right > enemyRect.left &&
+                    bulletShoted.top < enemyRect.bottom &&
+                    bulletShoted.bottom > enemyRect.top
                 ) {
                     bullet.remove();
                     this.bullets.splice(i, 1);
-                    e.element.remove();
-                    enemyShips.splice(j, 1);
+
+                    enemy.element.remove();
+                    enemyShips.splice(enemyIndex, 1);
                     
                     this.addScore(50); // adiciona 10 pontos por inimigo destruído
+                    
                 }
+
             });
-            for (let k = ufos.length - 1; k >= 0; k--) {
-                const ufo   = ufos[k];
-                const ur    = ufo.element.getBoundingClientRect();
+            for (let ufoIndex = ufos.length - 1; ufoIndex >= 0; ufoIndex--) {
+                const ufo   = ufos[ufoIndex];
+                const ufoRect    = ufo.element.getBoundingClientRect();
 
                 if (
-                    br.left   < ur.right &&
-                    br.right  > ur.left  &&
-                    br.top    < ur.bottom&&
-                    br.bottom > ur.top
+                    bulletShoted.left   < ufoRect.right &&
+                    bulletShoted.right  > ufoRect.left  &&
+                    bulletShoted.top    < ufoRect.bottom&&
+                    bulletShoted.bottom > ufoRect.top
                 ) {
                     bullet.remove();
                     this.bullets.splice(i, 1);
 
                     ufo.destroy();
-                    ufos.splice(k, 1);
+                    ufos.splice(ufoIndex, 1);
 
                     this.addScore(20);  // ajuste os pontos como desejar
+                    
                     break;  // sai do loop de UFOS
                 }
             }
+            meteors.forEach((meteor, meteorIndex) => {
+                const meteorRect = meteor.element.getBoundingClientRect();
+                if (
+                        bulletShoted.left < meteorRect.right &&
+                        bulletShoted.right > meteorRect.left &&
+                        bulletShoted.top < meteorRect.bottom &&
+                        bulletShoted.bottom > meteorRect.top
+                    ) {
+                        bullet.remove();
+                        this.bullets.splice(i, 1);
+                        
+                        meteor.remove();
+                        meteors.splice(meteorIndex, 1);
+
+                        // Pontos diferentes dependendo do tipo
+                        if (meteor.type === "small") {
+                            this.addScore(100);
+                        } 
+                        else if (meteor.type === "big") {
+                            this.addScore(10);
+                        }
+                    }
+            })
         });
     }
 

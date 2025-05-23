@@ -40,6 +40,12 @@ body{
   z-index: 950;
 }
 
+.sem-bullets {
+  list-style-type: none; /* remove os bullets */
+  padding-left: 0;       /* opcional: remove o recuo padrão */
+  margin-left: 0;        /* opcional: remove margem */
+}
+
 #space{
     background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
     position: relative;
@@ -69,6 +75,7 @@ body{
 
 
 #restart-btn{
+
     margin-top: 30px;
     font-size: 24px;
     padding: 10px 20px;
@@ -80,6 +87,7 @@ body{
     border-style:solid;
     border-radius: 20%;
     border-width: 5px;
+    
 }
 
 #tutorial-screen{
@@ -144,4 +152,23 @@ body{
   font-size: 28px; 
   margin-top: 20px; 
   color:blueviolet
+}
+
+#speedup-message{
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 215, 0, 0.9);
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-family: 'Iceland', sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    color: #222;
+    z-index: 100002;
+    box-shadow: 0 0 10px gold;
+    user-select: none;
+    pointer-events: none;
 }

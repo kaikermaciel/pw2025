@@ -7,8 +7,11 @@ import { createRandomMeteor, moveMeteors, meteors } from "./meteor.js";
 import { createRandomUFO, moveUFOs, ufos   } from "./ufo.js";
 import { DIFFICULTY } from "./config.js"
 
+
+let speedUpTimeout
 window.isPaused = false;
 window.gameStarted = false;
+
 
 function init(){
     setInterval(run, 1000 / FPS)
@@ -41,10 +44,20 @@ function restartGame() {
 }
 
 
-setInterval(() => {
-  DIFFICULTY.speedMultiplier += DIFFICULTY.SPEED_INCREMENT
-  console.log("Nova dificuldade (speedMultiplier):", DIFFICULTY.speedMultiplier.toFixed(2))
-}, DIFFICULTY.SPEED_UP_INTERVAL_MS)
+function showSpeedUpMessage() {
+  const msg = document.getElementById("speedup-message");
+  if (!msg) return;
+
+  msg.style.display = "block";
+
+  if (speedUpTimeout) clearTimeout(speedUpTimeout);
+
+  speedUpTimeout = setTimeout(() => {
+    msg.style.display = "none";
+    speedUpTimeout = null;
+  }, 1500);
+}
+
 
 
 
@@ -77,62 +90,90 @@ window.addEventListener("keydown", e => {
 });
 
 
+  
 
 document.getElementById("restart-btn").addEventListener("click", () => {
-  // Esconde a tela de game over
   const gameOverScreen = document.getElementById("game-over-screen");
   gameOverScreen.style.display = "none";
 
-  // Reseta estado do jogo
   window.gameOver = false;
 
-  // Reseta a nave (vidas, pontuação)
   ship.lives = 3;
   ship.score = 0;
   updateHUD(ship.lives, ship.score);
 
-  // Remove todos inimigos e tiros da tela e arrays
   enemyShips.forEach(e => e.element.remove());
   enemyShips.length = 0;
 
- // ship.bullets.forEach(b => b.remove());
-  //ship.bullets.length = 0;
+  ship.bullets.forEach(b => b.remove());
+  ship.bullets.length = 0;
+
+  meteors.forEach(m => m.remove());
+  meteors.length = 0;
+
+  ufos.forEach(u => u.destroy());
+  ufos.length = 0;
+
 });
 
 document.getElementById("start-game-btn").addEventListener("click", () => {
   window.gameStarted = true;
   document.getElementById("tutorial-screen").style.display = "none";
-
-  // opcional: pode iniciar som, animações etc
 });
+
+window.addEventListener("keydown", (e) => {
+  if (!window.gameStarted && e.code === "Space") {
+    e.preventDefault();
+    window.gameStarted = true;
+    document.getElementById("tutorial-screen").style.display = "none";
+  }
+});
+
+function increaseDifficulty() {
+  DIFFICULTY.speedMultiplier += DIFFICULTY.SPEED_INCREMENT;
+  DIFFICULTY.enemySpawnProb += DIFFICULTY.enemySpawnIncrement;
+  DIFFICULTY.ufoSpawnProb += DIFFICULTY.ufoSpawnIncrement;
+  DIFFICULTY.meteorSpawnProb += DIFFICULTY.meteorSpawnIncrement;
+
+  showSpeedUpMessage();
+}
+
+
+
 
 
 const bgMusic = new Audio("./assets/audio/[8 BIT] Interstellar Main Theme(Soundtrack) - Hans Zimmer [8 BIT].mp3");
-bgMusic.volume = 0.02;   // volume em 10%
+bgMusic.volume = 0.7;   // volume em 2%
 bgMusic.loop = true;
 
 
 
 function run(){
-    updateHUD(ship.lives, ship.score)
-    if (!window.gameStarted) return; 
-    if (window.gameOver || window.isPaused) return;  // pausa o jogo
+    updateHUD(ship.lives, ship.score) // atualiza o hud
+    if (window.gameOver || window.isPaused || !window.gameStarted) return;  // pausa e jogo pausead
+    
     space.move();
     ship.move();
+    
+    // cria os inimigo/obstaculos
     createRandomEnemyShip();
     moveEnemyShips();
     createRandomMeteor();
     moveMeteors();
     createRandomUFO();
     moveUFOs()
+    
     ship.updateBullets();
-    ship.colisao();
-    ship.checkMeteorCollisions();
+    ship.collision();
+
+    
     bgMusic.play().catch(e => {
       console.log("Erro ao tentar tocar música:", e);
     });
+
 }
 
 setInterval(run, 1000 / FPS);
+setInterval(increaseDifficulty, DIFFICULTY.SPEED_UP_INTERVAL_MS);
 
 

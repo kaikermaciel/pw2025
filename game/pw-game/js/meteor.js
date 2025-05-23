@@ -1,5 +1,5 @@
 import { space } from "./space.js";
-import { PROB_METEOR, TAMX, DIFFICULTY, SPEEDY_METEOR_SMALL, SPEEDY_METEOR_BIG, SPEEDX_METEOR_BIG, SPEEDX_METEOR_SMALL } from "./config.js";
+import {  TAMX, DIFFICULTY, SPEEDY_METEOR_SMALL, SPEEDY_METEOR_BIG, SPEEDX_METEOR_BIG, SPEEDX_METEOR_SMALL } from "./config.js";
 
 export class Meteor {
   constructor(type = "small") {
@@ -23,17 +23,17 @@ export class Meteor {
 
     if (Math.random() < 0.5) {
       // Entrando pela esquerda
-      this.element.style.left = `-${this.width}px`; // fora da tela, à esquerda
-      this.baseSpeedX = Math.abs(type === "small" ? SPEEDX_METEOR_SMALL : SPEEDX_METEOR_BIG); // velocidade positiva (vai para a direita)
+      this.element.style.left = `-${this.width}px`; 
+      this.baseSpeedX = Math.abs(type === "small" ? SPEEDX_METEOR_SMALL : SPEEDX_METEOR_BIG); 
     } else {
       // Entrando pela direita
-      this.element.style.left = `${TAMX + this.width}px`; // fora da tela, à direita
-      this.baseSpeedX = -Math.abs(type === "small" ? SPEEDX_METEOR_SMALL : SPEEDX_METEOR_BIG); // velocidade negativa (vai para a esquerda)
+      this.element.style.left = `${TAMX + this.width}px`; 
+      this.baseSpeedX = -Math.abs(type === "small" ? SPEEDX_METEOR_SMALL : SPEEDX_METEOR_BIG); 
     }
 
     this.element.className = "meteor";
     this.element.style.position = "absolute";
-    this.element.style.top = "-60px";
+    this.element.style.top = "100px";
     this.element.style.width = `${this.width}px`;
     this.element.style.height = `${this.height}px`;
 
@@ -55,12 +55,13 @@ export class Meteor {
 
 export const meteors = []
 
-export function createRandomMeteor() {
-  if (Math.random() < PROB_METEOR) {
-    const type = Math.random() < 0.20 ? "small" : "big"; // 20% pequeno, 80% grande
+
+export const createRandomMeteor = () => {
+  if (Math.random() < DIFFICULTY.meteorSpawnProb) {
+    const type = Math.random() < 0.20 ? "small" : "big"; 
     meteors.push(new Meteor(type));
   }
-}
+};
 
 export function moveMeteors() {
   meteors.forEach((meteor, i) => {
