@@ -42,21 +42,6 @@ class Ship{
         }
     }
 
-    setDirection(giro){
-        if (this.isDamaged) return;
-        if (giro === 0){
-            this.direction = this.direction[giro]
-            this.element.src = directions[this.direction]
-        } else if (giro === 2){
-            this.direction = this.direction[giro]
-            this.element.src = directions[this.direction]
-        } else {
-            this.direction = this.direction[giro]
-            this.element.src = directions[this.direction]
-        }
-    }
-
-
     move() {
         const parentRect = this.element.parentElement.getBoundingClientRect();
         const rect = this.element.getBoundingClientRect();

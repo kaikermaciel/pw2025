@@ -130,7 +130,11 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
+
+
 function increaseDifficulty() {
+  if(window.isPaused || window.gameOverScreen || !window.gameStarted) return;
+  
   DIFFICULTY.speedMultiplier += DIFFICULTY.SPEED_INCREMENT;
   DIFFICULTY.enemySpawnProb += DIFFICULTY.enemySpawnIncrement;
   DIFFICULTY.ufoSpawnProb += DIFFICULTY.ufoSpawnIncrement;

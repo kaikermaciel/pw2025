@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+
     <title>Document</title>
 </head>
 <body>
-    <div class="instruction"></div>
+    <div class="container">
+        <div class="overlay"></div>
+    </div>
+    <div class="raccoon">
+        <div id="raccoonGif">
+            <img src="img/racoon.gif" alt="racoon-gif">
+        </div>
+        <p id="challenger">
+            As regras são simples:<br>
+            Aperte o botão que você escolhe <br>
+            [Pedra | Papel | Tesoura]
+            <br><br>
+            E irei escolher o meu, e iremos jogar até eu ganhar(vai ser fácil)
+        </p>   
+        <div id="buttons">
+            <button id="startButton">Começar</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            window.location.href = 'game.html'; // Redireciona para a página desejada
+          });
+    </script>
 </body>
 </html>

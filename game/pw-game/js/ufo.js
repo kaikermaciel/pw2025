@@ -1,27 +1,31 @@
 // ufo.js
 import { space } from "./space.js";
-import { TAMX, TAMY, DIFFICULTY, SPEEDY_UFO, SPEEDX_UFO } from "./config.js";
+import { PROB_UFO, TAMX, TAMY } from "./config.js";
 
 export class UFO {
   constructor() {
+    // Define a posição inicial aleatória
     this.element = document.createElement("img");
     this.element.src = "./assets/spaceArt/png/enemyUFO.png";  
     this.element.className = "ufo";
     this.element.style.position = "absolute";
 
-    this.baseSpeedY = SPEEDY_UFO
-    this.baseSpeedX = SPEEDX_UFO
-
-    this.element.style.top  = "-20px"
-    this.element.style.left = `${parseInt(Math.random() * TAMX)}px`
-
-    space.element.appendChild(this.element)
-
-
-    this.element.onload = () => {
-      this.boundWidth  = this.element.width
-      this.boundRightX = TAMX - this.boundWidth
+     // Inicializa com a UFO fora da tela (à esquerda ou à direita)
+    this.element.style.top = `${Math.random() * 100}px`;  // começa aleatoriamente no topo
+    if (Math.random() < 0.5) {
+      this.element.style.left = `-${Math.random() * 100}px`;  // começa fora da tela pela esquerda
+    } else {
+      this.element.style.left = `${TAMX + Math.random() * 100}px`;  // começa fora da tela pela direita
     }
+
+    space.element.appendChild(this.element);
+
+    // Direção inicial (esquerda ou direita)
+    this.direction = Math.random() < 0.5 ? -1 : 1;  // -1 para esquerda, 1 para direita
+
+    // Velocidades em X e Y para o movimento diagonal
+    this.speedX = Math.random() * 2 + 1; // velocidade horizontal (1 a 3)
+    this.speedY = Math.random() * 2 + 1; // velocidade vertical (1 a 3)
   }
 
     move(){
@@ -29,24 +33,22 @@ export class UFO {
         const left = parseFloat(this.element.style.left);
 
         // Aplica o multiplicador de velocidade
-        const deltaY = this.baseSpeedY * DIFFICULTY.speedMultiplier;
-        const deltaX = this.baseSpeedX * DIFFICULTY.speedMultiplier;
+        this.element.style.left = `${left + this.speedX * this.direction}px`;
+        this.element.style.top = `${top + this.speedY}px`;
 
-        let newLeft = left + deltaX;
-        let newTop  = top  + deltaY;
-
-        const maxRight = TAMX - (this.boundWidth || this.element.width || 50); 
-
-        if (newLeft <= 0) {
-            newLeft = 0;
-            this.baseSpeedX = Math.abs(this.baseSpeedX); 
-        } else if (newLeft >= maxRight) {
-            newLeft = maxRight;
-            this.baseSpeedX = -Math.abs(this.baseSpeedX); 
+        // Limite lateral: se sair dos limites, troca direção
+        if (left <= 0 || left >= TAMX - this.element.width) {
+          this.direction *= -1;  // troca a direção
         }
 
-        this.element.style.left = `${newLeft}px`;
-        this.element.style.top  = `${newTop}px`;
+        if (top >= window.innerHeight) {
+          this.resetPosition();
+        }
+    }
+
+    resetPosition() {
+      this.element.style.top = `-${Math.random() * 100}px`;
+      this.element.style.left = `${Math.random() < 0.5 ? -100 : TAMX + 100}px`;
     }
 
 
@@ -62,10 +64,10 @@ export class UFO {
 const ufos = [];
 
 export const createRandomUFO = () => {
-  if (Math.random() < DIFFICULTY.ufoSpawnProb) {
-    ufos.push(new UFO());
+  if (Math.random() < PROB_UFO) {
+    ufos.push(new UFO())
   }
-};
+}
 
 export const moveUFOs = () => {
   for (let i = ufos.length - 1; i >= 0; i--) {

@@ -41,16 +41,16 @@ body{
 }
 
 .sem-bullets {
-  list-style-type: none; /* remove os bullets */
-  padding-left: 0;       /* opcional: remove o recuo padrão */
-  margin-left: 0;        /* opcional: remove margem */
+  list-style-type: none;
+  padding-left: 0;      
+  margin-left: 0;       
 }
 
 #space{
     background-image: url("../assets/spaceArt/png/Background/starBackground.png") ;
     position: relative;
     overflow: hidden;
-    margin-left: 40em;
+    margin-left: 35%;
     box-shadow: 0px 0px 10px rgb(88, 1, 81) ;
 }
 
@@ -91,7 +91,7 @@ body{
 }
 
 #tutorial-screen{
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgb(136, 0, 247);
   color: rgb(255, 208, 0);
@@ -110,6 +110,8 @@ body{
     font-size: 22px;
     cursor: pointer;
     font-family: 'Iceland', sans-serif;
+    color: darkorange;
+    background-color: midnightblue;
 }
 
 #hud{

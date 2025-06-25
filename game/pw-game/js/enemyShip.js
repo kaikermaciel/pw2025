@@ -7,8 +7,7 @@ class EnemyShip{
         this.element.src = "./assets/spaceArt/png/enemyShip.png"
         this.element.style.top = "-20px"
 
-        this.element.style.left = `${MARGIN + Math.random() * (TAMX - 2 * MARGIN)}px`;
-        this.element.style.right = `${MARGIN + Math.random() * (TAMX - 2 * MARGIN)}px`;
+        this.element.style.left = `${parseInt(Math.random() * TAMX)}px`
 
         
         space.element.appendChild(this.element)
@@ -34,19 +33,19 @@ export const createRandomEnemyShip = () => {
 };
 
 export function moveEnemyShips() {
-    enemyShips.forEach((enemyShip, enemyIndex) => {
-        enemyShip.move()
-        const rect = enemyShip.element.getBoundingClientRect()
+        enemyShips.forEach((enemyShip, enemyIndex) => {
+            enemyShip.move()
+            const rect = enemyShip.element.getBoundingClientRect()
 
-        if(
-            rect.top > window.innerHeight ||
-            rect.left < 0 ||
-            rect.right > window.innerHeight
-        ){
-            enemyShip.remove()
-            enemyShips.splice(enemyIndex, 1);
-        }
-    })
+            if(
+                rect.top > window.innerHeight ||
+                rect.left < 0 ||
+                rect.right > window.innerHeight
+            ){
+                enemyShip.remove()
+                enemyShips.splice(enemyIndex, 1);
+            }
+        })
 }
 
 
