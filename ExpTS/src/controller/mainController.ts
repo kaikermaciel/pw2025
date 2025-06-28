@@ -13,7 +13,15 @@ const greetings = (req: Request, res: Response) => {
 };
 
 const about = (req: Request, res: Response) => {
-    res.send("Página sobre!")
+    res.render("about", {
+         mensagem: {
+            title: 'jogo do spaceshooter',
+            line1: 'space para atirar',
+            line2: 'setas para direcionar',
+            line3: 'não seja atingido e irá ganhar :)'
+        },
+        layout: false
+    })
 }
 
 const hb1 = (req: Request, res: Response) => {
@@ -53,6 +61,8 @@ const hb4 = (req: Request, res: Response) => {
 
         res.render('hb4', { technologies , layout:false})
 }
+
+
 
 const lorem = (req: Request, res: Response) =>{
     const lorem = new LoremIpsum({

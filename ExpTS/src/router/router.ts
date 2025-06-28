@@ -1,11 +1,13 @@
 import { Router } from "express";
 import mainController from "../controller/mainController";
 import majorController from "../controller/major.controller";
+import userController from "../controller/user.controller"; // Import the new user controller
+
 const router = Router();
 
 router.get("/", mainController.main)
 router.get("/bem-vindo/:nome", mainController.greetings)
-router.get("/sobre", mainController.about);
+router.get("/about", mainController.about);
 router.get("/hb1", mainController.hb1);
 router.get("/hb2", mainController.hb2);
 router.get("/hb3", mainController.hb3);
@@ -16,9 +18,17 @@ router.get('/cookie', mainController.testeCookie)
 
 router.get("/majors/", majorController.index)
 router.all("/majors/create", majorController.create)
-router.get("/majors/:id", majorController.read)
+router.get("/majors/read/:id", majorController.read)
 router.all("/majors/update/:id", majorController.update)
-router.post("/majors/remove/:id", majorController.remove)
+router.post("/majors/remove/:id", majorController.remove);
+
+// User Routes
+router.get("/users/", userController.index);
+router.all("/users/create", userController.create);
+router.get("/users/read/:id", userController.read)
+router.all("/users/update/:id", userController.update)
+router.post("/users/remove/:id", userController.remove);
+
 
 router.use((req, res) => {
     res.status(404).send("Página não encontrada!");

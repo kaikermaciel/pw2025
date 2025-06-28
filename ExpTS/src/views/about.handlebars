@@ -1,0 +1,29 @@
+
+<style>
+    .about-page-container {
+        background-image: url('/img/starBackground.png');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 10px; 
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .game-image {
+        height: 50%;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="about-page-container d-flex flex-column align-items-center justify-content-center">
+    
+    <img src="/img/spaceShooter.png" alt="Nave do jogo Space Shooter" class="game-image">
+
+    <h2>{{mensagem.title}}</h2>
+    <p>{{mensagem.line1}}</p>
+    <p>{{mensagem.line2}}</p>
+    <p>{{mensagem.line3}}</p>
+</div>
+
