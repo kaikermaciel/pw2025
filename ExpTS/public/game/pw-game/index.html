@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/iconSpace.png" />
+    <title>Space Shooter</title>
+</head>
+<body>
+    <div id="game-wrapper">
+        <div id="tutorial-screen" >
+            <img src="./assets/spaceShooter.png" alt="Mini Você" style="width: 120px; height: 120px; margin-bottom: 20px;" />
+            <h1>Bem-vindo ao jogo!</h1>
+            <p style="max-width: 500px; text-align: center; font-size: 20px; line-height: 1.5;">
+                Use as setas <strong>←</strong> e <strong>→</strong> para mover a nave.<br />
+                Pressione <strong>Espaço</strong> para atirar.<br /><br>
+                Cuidado com os inimigos, meteoros e UFOs! <br> Se você levar dano de quaisquer um desses <strong>você ficará imóvel!</strong> <br />
+                Aperte <strong>P</strong> para pausar e <strong>R</strong> para reiniciar.<br />
+                Pontuação:
+                <ul class="sem-bullets"style="max-width: 500px; text-align: center; font-size: 20px; line-height: 1.5;">
+                    <li>Meteoro Grande - 10</li>
+                    <li>UFO - 20</li>
+                    <li>Nave Inimiga - 50</li>
+                    <li>Meteoro Pequeno - 100</li>
+                </ul>
+            </p>
+            <button id="start-game-btn">Começar</button>
+        </div>
+
+        <div id="hud">
+            <div id="lives-container"></div>
+            <span id="score">Pontos: 0</span>
+        </div>
+
+        <div id="game-over-screen">
+            <div style="color: yellow;">Game Over!!!</div>
+            <div id="final-score"></div>
+            <button id="restart-btn">Reiniciar</button>
+        </div>
+
+        <div id="pause-screen">
+            <div>PAUSADO</div>
+            <div style="color: yellow; font-size: 24px; margin-top: 20px; font-family: 'Iceland', sans-serif;">← → para se movimentar</div>
+            <div style="color: yellow; font-size: 24px; margin-top: 20px; font-family: 'Iceland', sans-serif;">Espaço para atirar</div>
+            <div style="color: yellow; font-size: 24px; margin-top: 20px; font-family: 'Iceland', sans-serif;">R para Reiniciar</div>
+            <div style="color: yellow; font-size: 24px; margin-top: 20px; font-family: 'Iceland', sans-serif;"><strong>Pressione P para continuar</strong></div>
+        </div>
+
+        <div id="speedup-message">
+            Speed Up!
+        </div>
+    </div>
+
+        <div id="space"></div>
+    <script type="module" src="js/game.js"></script>
+</body>
+</html>

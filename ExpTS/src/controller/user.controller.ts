@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { createUser, getUsers, getUser, removeUser, updateUser } from "../services/user"; // Import createUser
-import { getMajors } from "../services/major";
+import { createUser, getUsers, getUser, removeUser, updateUser, checkAuth } from "../services/user"; // Import createUser
+import { getMajor, getMajors } from "../services/major";
+import { LoginDto } from "../types/user";
 
 const index = async (req: Request, res: Response) => {
     try {
@@ -44,9 +45,13 @@ const read = async (req: Request, res: Response) => {
     const { id } = req.params;
     try{
         const user = await getUser(id)
-        res.render("users/read",{
-            user
-        }) 
+        const major = user?.majorId ? await getMajor(user.majorId) : null;
+        if (req.method === "GET"){
+            res.render("users/read",{
+                user,
+                major
+            })
+        } 
     } catch(err){
         console.log(err)
     }
@@ -85,4 +90,29 @@ const remove = async (req: Request, res: Response) => {
     }
 }
 
-export default { index, create, read, update, remove }
+const login = async (req: Request, res: Response) => {
+    if (req.method === "GET") {
+        res.render('users/login')
+    } else {
+        const {email, password} = req.body as LoginDto
+        const ok = await checkAuth(email, password)
+        if (!ok){
+            return res.render('users/login', {
+                ok
+            })
+        } else{
+            req.session.logado = true 
+            res.redirect('/users')
+        }
+    }
+}
+
+const logout = async (req: Request, res: Response) => {
+    req.session.destroy(() => {
+        res.clearCookie('connect.sid')
+        res.redirect("/")
+    })
+}
+    
+
+export default { index, create, read, update, remove, login, logout }

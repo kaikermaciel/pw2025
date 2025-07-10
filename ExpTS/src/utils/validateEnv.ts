@@ -1,11 +1,13 @@
 import { cleanEnv, port, str } from "envalid";
 
-function validateEnv() {
+const validateEnv = () => {
     cleanEnv(process.env, {
+        NODE_ENV: str({choices: ["prodution", "development"], default: "development"}),
         PORT: port(),
-        NODE_ENV: str({ choices: ["development", "production"] }),
+        DATABASE_URL: str(),
         LOGS_PATH: str(),
+        SECRET_SESSION: str(),
     });
-}
+};
 
 export default validateEnv;

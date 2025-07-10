@@ -2,6 +2,7 @@ import { Router } from "express";
 import mainController from "../controller/mainController";
 import majorController from "../controller/major.controller";
 import userController from "../controller/user.controller"; // Import the new user controller
+import { checkAuth } from "../middlewares/checkAuth";
 
 const router = Router();
 
@@ -17,7 +18,7 @@ router.get('/cookie', mainController.testeCookie)
 
 
 router.get("/majors/", majorController.index)
-router.all("/majors/create", majorController.create)
+router.all("/majors/create", checkAuth, majorController.create)
 router.get("/majors/read/:id", majorController.read)
 router.all("/majors/update/:id", majorController.update)
 router.post("/majors/remove/:id", majorController.remove);
@@ -28,6 +29,8 @@ router.all("/users/create", userController.create);
 router.get("/users/read/:id", userController.read)
 router.all("/users/update/:id", userController.update)
 router.post("/users/remove/:id", userController.remove);
+router.all("/users/login", userController.login)
+router.get("/users/logout", userController.logout)
 
 
 router.use((req, res) => {

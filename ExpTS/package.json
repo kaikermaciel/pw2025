@@ -14,17 +14,22 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.9.0",
+    "bcryptjs": "^3.0.2",
     "bootstrap-icons": "^1.13.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "envalid": "^8.0.0",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
+    "express-session": "^1.18.1",
     "lorem-ipsum": "^2.0.8",
-    "sass": "^1.89.1"
+    "sass": "^1.89.1",
+    "session": "^0.1.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.9",
+    "@types/express-session": "^1.18.2",
     "nodemon": "^3.1.10",
     "prisma": "^6.9.0"
   }
