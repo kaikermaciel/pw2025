@@ -4,7 +4,7 @@ import { space } from "./space.js";
 export class Bullet {
   constructor(x, y) {
     this.element = document.createElement("img");
-    this.element.src = "./assets/spaceArt/png/laserRed.png";
+    this.element.src = "./game/assets/spaceArt/png/laserRed.png";
     this.element.className = "bullet";
     this.element.style.position = "absolute";
     this.element.style.left = `${x}px`;

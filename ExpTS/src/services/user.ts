@@ -15,12 +15,15 @@ export const createUser = async (user: CreateUserDTO):Promise<User> =>{
     return await prisma.user.create({data:newUser});
 }
 
-export const checkAuth = async (email: string, password : string): Promise<boolean> => {
+export const checkAuth = async (email: string, password : string): Promise<User | null> => {
     const user = await prisma.user.findFirst({ where: { email: email }})
     if (user){
-        return await compare(password, user.password)
+        const isMatch = await compare(password, user.password);
+        if (isMatch) {
+            return user;
+        }
     }
-    return false
+    return null;
 }
 
 export const getUser = async(id:string): Promise<User | null> => {
@@ -35,3 +38,35 @@ export const updateUser = async (id: string, data: Prisma.UserUpdateInput): Prom
     return await prisma.user.update({ where: { id }, data });
 }
 
+
+export const checkPassword = async (id: string, password: string): Promise<boolean> => {
+    const user = await prisma.user.findFirst({ where: { id: id } });
+    if (user) {
+        return await compare(password, user.password);
+    }
+    return false;
+}
+
+
+export const updatePass = async (id: string, password: string): Promise<User> => {
+    const salt = await genSalt();
+    const hashedPassword = await hash(password, salt);
+    return await prisma.user.update({ where: { id }, data: { password: hashedPassword } });
+}
+
+
+export const changeUserPassword = async (id: string,currentPassword: string,newPassword: string): Promise<{ success: boolean; message: string }> => {
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+        return { success: false, message: "Usuário não encontrado." };
+    }
+
+    const isPasswordCorrect = await compare(currentPassword, user.password);
+    if (!isPasswordCorrect) {
+        return { success: false, message: "Senha atual incorreta." };
+    }
+
+    await updatePass(id, newPassword);
+
+    return { success: true, message: "Senha alterada com sucesso." };
+};

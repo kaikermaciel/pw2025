@@ -1,12 +1,12 @@
 // ufo.js
 import { space } from "./space.js";
-import { PROB_UFO, TAMX, TAMY } from "./config.js";
+import { DIFFICULTY, TAMX, TAMY } from "./config.js";
 
 export class UFO {
   constructor() {
     // Define a posição inicial aleatória
     this.element = document.createElement("img");
-    this.element.src = "./assets/spaceArt/png/enemyUFO.png";  
+    this.element.src = "./game/assets/spaceArt/png/enemyUFO.png";  
     this.element.className = "ufo";
     this.element.style.position = "absolute";
 
@@ -64,7 +64,7 @@ export class UFO {
 const ufos = [];
 
 export const createRandomUFO = () => {
-  if (Math.random() < PROB_UFO) {
+  if (Math.random() < DIFFICULTY.ufoSpawnProb) {
     ufos.push(new UFO())
   }
 }

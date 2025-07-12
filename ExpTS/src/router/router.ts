@@ -2,11 +2,13 @@ import { Router } from "express";
 import mainController from "../controller/mainController";
 import majorController from "../controller/major.controller";
 import userController from "../controller/user.controller"; // Import the new user controller
+import gameController from "../controller/game.controller";
 import { checkAuth } from "../middlewares/checkAuth";
 
 const router = Router();
 
 router.get("/", mainController.main)
+router.get("/game", checkAuth, mainController.game);
 router.get("/bem-vindo/:nome", mainController.greetings)
 router.get("/about", mainController.about);
 router.get("/hb1", mainController.hb1);
@@ -20,17 +22,27 @@ router.get('/cookie', mainController.testeCookie)
 router.get("/majors/", majorController.index)
 router.all("/majors/create", checkAuth, majorController.create)
 router.get("/majors/read/:id", majorController.read)
-router.all("/majors/update/:id", majorController.update)
-router.post("/majors/remove/:id", majorController.remove);
+router.all("/majors/update/:id", checkAuth, majorController.update)
+router.post("/majors/remove/:id", checkAuth, majorController.remove);
 
-// User Routes
 router.get("/users/", userController.index);
 router.all("/users/create", userController.create);
 router.get("/users/read/:id", userController.read)
-router.all("/users/update/:id", userController.update)
-router.post("/users/remove/:id", userController.remove);
+router.all("/users/update/:id", checkAuth, userController.update)
+router.post("/users/remove/:id", checkAuth, userController.remove);
+
+router.get("/users/profile", checkAuth, userController.renderProfilePage);
+router.post("/users/profile/update", checkAuth, userController.updateProfileData);
+
+router.get("/users/profile/password", checkAuth, userController.renderChangePasswordPage);
+router.post("/users/profile/password/update", checkAuth, userController.updatePassword);
+
+
+router.post("/game/score", checkAuth, gameController.saveScore);
+router.get("/ranking", gameController.renderLeaderboard);
+
 router.all("/users/login", userController.login)
-router.get("/users/logout", userController.logout)
+router.post("/users/logout", userController.logout)
 
 
 router.use((req, res) => {

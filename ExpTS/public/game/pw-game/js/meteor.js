@@ -7,12 +7,12 @@ export class Meteor {
     this.element = document.createElement("img");
 
     if (type === "small") {
-      this.element.src = "./assets/spaceArt/png/meteorSmall.png";
+      this.element.src = "./game/assets/spaceArt/png/meteorSmall.png";
       this.width = 30;
       this.height = 30;
     
     } else if (type === "big") {
-      this.element.src = "./assets/spaceArt/png/meteorBig.png";
+      this.element.src = "./game/assets/spaceArt/png/meteorBig.png";
       this.width = 60;
       this.height = 60;
       

@@ -1,0 +1,73 @@
+/* Definindo variáveis de cor para fácil manutenção */
+$primary-font-color: white;
+$highlight-color: #ffc107; // Amarelo do Bootstrap
+$nav-background: rgba(0, 0, 0, 0.5);
+
+body {
+    margin: 0;
+    overflow: hidden; /* Isso também ajuda a prevenir a rolagem */
+    background-color: #000;
+    font-family: sans-serif;
+}
+
+/* Estilos para a barra de navegação dentro do jogo */
+.game-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $nav-background;
+    padding: 10px 20px;
+    z-index: 100002; /* Maior que o z-index da tela de pause (100001) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+
+    .nav-left, .nav-center, .nav-right {
+        flex: 1;
+    }
+
+    .nav-center {
+        text-align: center;
+    }
+
+    .nav-right {
+        text-align: right;
+    }
+
+    a {
+        color: $primary-font-color;
+        text-decoration: none;
+        font-size: 1.1rem;
+        margin: 0 15px;
+        transition: color 0.2s;
+
+        &:hover {
+            color: $highlight-color;
+        }
+    }
+
+    span.game-nav-user {
+        color: $primary-font-color;
+        font-size: 1.1rem;
+        display: inline-flex; /* Use inline-flex para ser centrado pelo text-align */
+        align-items: center;
+
+        .bi-person-circle {
+            margin-right: 8px;
+        }
+    }
+}
+
+/* Outros estilos do seu jogo que estavam no styles.css podem vir aqui */
+#space {
+    background-image: url('../assets/spaceArt/png/bg.png');
+    background-repeat: repeat-y;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}

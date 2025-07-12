@@ -6,12 +6,31 @@ import { meteors } from "./meteor.js"
 import { FIRE_COOLDOWN_MS } from "./config.js"
 import { ufos } from "./ufo.js";
 
+/**
+ * Envia a pontuação final para o servidor via AJAX (Fetch API).
+ * @param {number} score A pontuação a ser salva.
+ */
+async function sendScoreToServer(score) {
+    try {
+        const response = await fetch('/game/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ score: score }),
+        });
+        const result = await response.json();
+        console.log('Resposta do servidor:', result.message);
+    } catch (error) {
+        console.error('Falha ao enviar score para o servidor:', error);
+    }
+}
 
 const directions = [
-    "./assets/spaceArt/png/playerLeft.png",
-    "./assets/spaceArt/png/player.png",
-    "./assets/spaceArt/png/playerRight.png",
-    "./assets/spaceArt/png/playerDamaged.png"
+    "/game/assets/spaceArt/png/playerLeft.png",
+    "/game/assets/spaceArt/png/player.png",
+    "/game/assets/spaceArt/png/playerRight.png",
+    "/game/assets/spaceArt/png/playerDamaged.png"
 ]
 
 class Ship{
@@ -107,6 +126,8 @@ class Ship{
             const finalScore = document.getElementById("final-score");
             finalScore.textContent = `Pontuação final: ${this.score}`;
             gameOverScreen.style.display = "block";
+            // Envia o score para o servidor
+            sendScoreToServer(this.score);
             window.gameOver = true;
         }
     }
@@ -291,7 +312,7 @@ export function updateHUD(lives, score) {
 
   for (let i = 0; i < lives; i++) {
     const img = document.createElement("img");
-    img.src = "./assets/spaceArt/png/life.png";  // ajuste o caminho para onde o life.png está no seu projeto
+    img.src = "/game/assets/spaceArt/png/life.png";
     img.style.width = "24px";
     img.style.height = "24px";
     img.style.marginRight = "5px";

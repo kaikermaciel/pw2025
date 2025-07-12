@@ -4,7 +4,7 @@ class EnemyShip{
     constructor(){
         this.element = document.createElement("img")
         this.element.className = "enemy-ship"
-        this.element.src = "./assets/spaceArt/png/enemyShip.png"
+        this.element.src = "./game/assets/spaceArt/png/enemyShip.png"
         this.element.style.top = "-20px"
 
         this.element.style.left = `${parseInt(Math.random() * TAMX)}px`

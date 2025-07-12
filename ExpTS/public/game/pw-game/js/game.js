@@ -87,6 +87,8 @@ window.addEventListener("keydown", e => {
     ship.shoot();
   }
   if (e.code === "ArrowLeft") ship.changeDirection(-1);
+  if (e.code === "ArrowLeft") e.preventDefault();
+  if (e.code === "ArrowRight") e.preventDefault();
   if (e.code === "ArrowRight") ship.changeDirection(+1);
 });
 

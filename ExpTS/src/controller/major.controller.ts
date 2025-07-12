@@ -24,6 +24,7 @@ const create = async (req: Request, res: Response) => {
         try{
             const major = req.body;
             await createMajor(major)
+            req.flash('success_msg', 'Curso criado com sucesso!');
             res.redirect("/majors")
         } catch(err){
             console.log(err);
@@ -59,6 +60,7 @@ const update = async (req: Request, res: Response) => {
         } else if (req.method === "POST"){
             const new_major = req.body;
             await updateMajor(id, new_major)
+            req.flash('success_msg', 'Curso atualizado com sucesso!');
             console.log(new_major)
             res.redirect("/majors")
         }
@@ -79,4 +81,3 @@ const remove = async (req: Request, res: Response) => {
 }
 
 export default { index, create, read, update, remove }
-

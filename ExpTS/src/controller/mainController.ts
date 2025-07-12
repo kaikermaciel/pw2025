@@ -2,14 +2,15 @@ import { Request, Response } from "express";
 import { LoremIpsum } from "lorem-ipsum";
 
 const main = (req: Request, res: Response) => {
-    res.render("layouts/main", {
-        mensagem: "flu",
-        layout:false,
-    })
+    res.render("index");
 };
 
 const greetings = (req: Request, res: Response) => {
     res.status(200).send(`Bem-vindo(a) ${req.params.nome}!`);
+};
+
+const game = (req: Request, res: Response) => {
+    res.render("game", { layout: false });
 };
 
 const about = (req: Request, res: Response) => {
@@ -23,6 +24,7 @@ const about = (req: Request, res: Response) => {
         layout: false
     })
 }
+
 
 const hb1 = (req: Request, res: Response) => {
     res.render("hb1", {
@@ -88,4 +90,4 @@ const testeCookie = (req : Request, res: Response) =>{
     }
 }
 
-export default { main, greetings, about, lorem, hb1, hb2, hb3, hb4, testeCookie }
+export default { main, greetings, about, lorem, hb1, hb2, hb3, hb4, testeCookie, game }

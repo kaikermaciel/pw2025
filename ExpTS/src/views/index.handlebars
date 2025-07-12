@@ -1,0 +1,11 @@
+<div class="container text-center py-5">
+    <h1 class="display-4" style="color: blueviolet;">Bem-vindo ao Space Shooter!</h1>
+    <p class="lead" style="color: rgb(0, 52, 73);">Sua missão: sobreviver às ondas de inimigos e meteoros.</p>
+    {{#if logado}}
+        <a class="btn btn-primary btn-lg" href="/game" role="button">Jogar Agora <i class="bi bi-joystick"></i></a>
+    {{else}}
+        <div class="alert alert-danger mt-4" role="alert">
+            <a href="/users/login" class="alert-link">Faça login</a> ou <a href="/users/create" class="alert-link">crie uma conta</a> para começar a jogar.
+        </div>
+    {{/if}}
+</div>
